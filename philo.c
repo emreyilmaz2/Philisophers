@@ -77,15 +77,15 @@ void    ft_init_common(t_mother *descartes, int argc, char **argv)
 
 void    time_to_dinner(t_philo *sude)
 {
-    pthread_mutex_lock(sude->link->mutex_fork[sude->l_fork_id]);
+    pthread_mutex_lock(&sude->link->mutex_fork[sude->l_fork_id]);
     // printf("left alindi");
-    pthread_mutex_lock(sude->link->mutex_fork[sude->r_fork_id]);
+    pthread_mutex_lock(&sude->link->mutex_fork[sude->r_fork_id]);
     // printf("right alindi");
     // printf("eating");
     time_machine(sude->link->time_to_eat, sude->link);
     sude->last_eat = gettime();
-    pthread_mutex_unlock(sude->link->mutex_fork[sude->l_fork_id]);
-    pthread_mutex_unlock(sude->link->mutex_fork[sude->r_fork_id]);
+    pthread_mutex_unlock(&sude->link->mutex_fork[sude->l_fork_id]);
+    pthread_mutex_unlock(&sude->link->mutex_fork[sude->r_fork_id]);
     sude->counter_eat++;
 }
 
@@ -130,7 +130,7 @@ void    *start(void *toto)
         time_to_dinner(philo);
         if(philo->link->num_to_eat <= philo->counter_eat && philo->link->num_to_eat != -1)
         {
-            philo->link->is_eat_all == ture;
+            philo->link->is_eat_all == true;
             break;
         }
         if(philo->link->dead == true)
